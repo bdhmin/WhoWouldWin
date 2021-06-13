@@ -1,8 +1,13 @@
+// import { url } from './../config';
+const config = require('./../config');
 const express = require('express')
 const axios = require('axios')
 const cors = require('cors');
 const app = express()
 const port = 4000
+
+const summonerURL = "https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/";
+const summoner = "Piece%20of%20Paper";
 
 app.get('/api/summoner', cors(), (req, res) => {
 
@@ -14,7 +19,9 @@ app.get('/api/summoner', cors(), (req, res) => {
 
   // Piece%20of%20Paper
   // nate025
-  axios.get('https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/s3b0?api_key=RGAPI-d3632f7d-cc43-46bf-bc59-40335e140449')
+  
+
+  axios.get(summonerURL + summoner + "?api_key=" + config.api_key)
     .then((dataPiece) => {
       res.json([dataPiece.data]);
     })
@@ -24,5 +31,6 @@ app.get('/api/summoner', cors(), (req, res) => {
 })
 
 app.listen(port, () => {
+  console.log("URL:", summonerURL + summoner + "?api_key=" + config.api_key);
   console.log(`Example app listening at http://localhost:${port}/api/summoner`)
 })
