@@ -19,6 +19,10 @@ app.get('/api/summoner', cors(), (req, res) => {
 
   // Piece%20of%20Paper
   // nate025
+
+
+  // Hardcoded summoner object
+  // res.json([config.hard_coded_summoner]);
   
 
   axios.get(summonerURL + summoner + "?api_key=" + config.api_key)
