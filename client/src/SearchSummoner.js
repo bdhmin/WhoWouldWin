@@ -5,15 +5,15 @@ class Search extends Component {
     super(props)
 
     this.state = {
-      summonerName: ''
+      summonerSearchName: ''
     }
   }
 
-  handleSummonerNameChange = (event) => {
+  handleSummonerSearchChange = (event) => {
     this.setState({
-      summonerName: event.target.value
+      summonerSearchName: event.target.value
     })
-    console.log(this.state.summonerName);
+    console.log(this.state.summonerSearchName);
   }
 
   render() {
@@ -21,7 +21,7 @@ class Search extends Component {
       <form>
         <div>
           Search for a summoner:
-          <input type="text" value={this.state.summonerName} onChange={this.handleSummonerNameChange}></input>
+          <input type="text" value={this.state.summonerSearchName} onChange={this.handleSummonerSearchChange}></input>
         </div>
       </form>
     )

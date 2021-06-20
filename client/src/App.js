@@ -9,7 +9,7 @@ class App extends Component {
     super();
     this.state = {
       users: [],
-      summonerSearchName: ''
+      summonerSearchName: '',
     };
   }
 
@@ -20,14 +20,22 @@ class App extends Component {
     console.log(this.state.summonerSearchName);
   }
 
-  keyPressSearch(event) {
+  keyPressSearch = (event) => {
     if (event.keyCode === 13) {
       console.log("Entered: ", event.target.value)
     }
   }
 
+  // Get user data
+  // https://www.youtube.com/watch?v=zrVjqvavS5U
+
   componentDidMount() {
-    axios.get('/api/summoner')
+    axios.get('/api/summoner', {
+      params: {
+        summonerName: "newbro64", // this.state.summonerSearchName
+        summonerName2: "s3b0"
+      }
+    })
       .then((response => this.setState({users: response.data})))
       .catch(function(error) {
         console.log('Can\'t fetch:', error.message);
@@ -47,7 +55,7 @@ class App extends Component {
         <h2>Users</h2>
         <ul>
         {this.state.users.map(user => 
-          <li key={user.id}>{this.state.summonerSearchName}, Level {user.summonerLevel}</li>
+          <li key={user.id}>{user.name}, Level {user.summonerLevel}</li>
         )}
         </ul>
       </div>
