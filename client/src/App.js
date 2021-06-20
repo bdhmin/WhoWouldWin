@@ -30,7 +30,8 @@ class App extends Component {
 
   keyPressSearch = (event) => {
     if (event.keyCode === 13) {
-      console.log("Entered: ", event.target.value)
+      console.log("Entered: ", event.target.value);
+      this.searchSummoners();
     }
   }
 
@@ -63,9 +64,9 @@ class App extends Component {
         <form>
           <div>
             Search for summoners:
-            <input type="text" value={this.state.summonerSearchName1} onChange={this.handleSummonerSearchChange1}></input>
-            <input type="text" value={this.state.summonerSearchName2} onChange={this.handleSummonerSearchChange2}></input>
-            <button type="button" onClick={this.searchSummoners}>Compare!</button>
+            <input type="text" value={this.state.summonerSearchName1} onChange={this.handleSummonerSearchChange1} onKeyDown={this.keyPressSearch}></input>
+            <input type="text" value={this.state.summonerSearchName2} onChange={this.handleSummonerSearchChange2} onKeyDown={this.keyPressSearch}></input>
+            <button type="button" onClick={this.searchSummoners} >Compare!</button>
           </div>
         </form>
 
