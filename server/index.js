@@ -24,16 +24,16 @@ app.get('/api/summoner', cors(), (request, response) => {
   // Hardcoded summoner object
   // response.json([config.hard_coded_summoner]);
 
-  summoner = request.query.summonerName;
+  summoner = request.query.summonerName1;
 
-  console.log("Query Names:", request.query.summonerName, "and", request.query.summonerName2);
+  console.log("Query Names:", request.query.summonerName1, "and", request.query.summonerName2);
   
   var dataArray = [];
 
   // It works, but is there a better way to do this? - not make it nested?
-  axios.get(summonerURL + request.query.summonerName + "?api_key=" + config.api_key)
-    .then((dataPiece) => {
-      dataArray.push(dataPiece.data);
+  axios.get(summonerURL + request.query.summonerName1 + "?api_key=" + config.api_key)
+    .then((dataPiece1) => {
+      dataArray.push(dataPiece1.data);
       axios.get(summonerURL + request.query.summonerName2 + "?api_key=" + config.api_key)
         .then((dataPiece2) => {
           dataArray.push(dataPiece2.data);

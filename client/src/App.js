@@ -9,15 +9,23 @@ class App extends Component {
     super();
     this.state = {
       users: [],
-      summonerSearchName: '',
+      summonerSearchName1: '',
+      summonerSearchName2: '',
     };
   }
 
-  handleSummonerSearchChange = (event) => {
+  handleSummonerSearchChange1 = (event) => {
     this.setState({
-      summonerSearchName: event.target.value
+      summonerSearchName1: event.target.value
     })
-    console.log(this.state.summonerSearchName);
+    console.log(this.state.summonerSearchName1);
+  }
+  
+  handleSummonerSearchChange2 = (event) => {
+    this.setState({
+      summonerSearchName2: event.target.value
+    })
+    console.log(this.state.summonerSearchName2);
   }
 
   keyPressSearch = (event) => {
@@ -26,20 +34,27 @@ class App extends Component {
     }
   }
 
+  searchSummoners = () => {
+    console.log("Compare Button Pressed. Comparing:", this.state.summonerSearchName1, "vs", this.state.summonerSearchName2);
+    this.componentDidMount(this.state.summonerSearchName1,  this.state.summonerSearchName2)
+  }
+
   // Get user data
   // https://www.youtube.com/watch?v=zrVjqvavS5U
 
-  componentDidMount() {
-    axios.get('/api/summoner', {
-      params: {
-        summonerName: "newbro64", // this.state.summonerSearchName
-        summonerName2: "s3b0"
-      }
-    })
-      .then((response => this.setState({users: response.data})))
-      .catch(function(error) {
-        console.log('Can\'t fetch:', error.message);
+  componentDidMount = (summoner1,  summoner2) => {
+    if (summoner1 !== undefined || summoner2 !== undefined) {
+      axios.get('/api/summoner', {
+        params: {
+          summonerName1: summoner1, // this.state.summonerSearchName
+          summonerName2: summoner2
+        }
       })
+        .then((response => this.setState({users: response.data})))
+        .catch(function(error) {
+          console.log('Can\'t fetch:', error.message);
+        })
+    }
   }
 
   render() {
@@ -47,8 +62,10 @@ class App extends Component {
       <div>
         <form>
           <div>
-            Search for a summoner:
-            <input type="text" value={this.state.summonerSearchName} onKeyDown={this.keyPressSearch} onChange={this.handleSummonerSearchChange}></input>
+            Search for summoners:
+            <input type="text" value={this.state.summonerSearchName1} onChange={this.handleSummonerSearchChange1}></input>
+            <input type="text" value={this.state.summonerSearchName2} onChange={this.handleSummonerSearchChange2}></input>
+            <button type="button" onClick={this.searchSummoners}>Compare!</button>
           </div>
         </form>
 
