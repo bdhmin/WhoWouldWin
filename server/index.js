@@ -9,7 +9,7 @@ const port = 4000
 const summonerURL = "https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/";
 var summoner = "";
 
-app.get('/api/summoner', cors(), (request, response) => {
+app.get('/api/summoners', cors(), (request, response) => {
 
   // This is temp data if you don't have API Key
   // const users = [
@@ -38,15 +38,16 @@ app.get('/api/summoner', cors(), (request, response) => {
         .then((dataPiece2) => {
           dataArray.push(dataPiece2.data);
           response.json(dataArray);
+          console.log("Array", dataArray);
         })
-    })
-    .catch((error) => {
-      response.sendStatus(500);
-    })
+      })
+      .catch((error) => {
+        response.sendStatus(500);
+      })
 
 })
 
 app.listen(port, () => {
   console.log("URL:", summonerURL + summoner + "?api_key=" + config.api_key);
-  console.log(`Example app listening at http://localhost:${port}/api/summoner`)
+  console.log(`Example app listening at http://localhost:${port}/api/summoners`)
 })
