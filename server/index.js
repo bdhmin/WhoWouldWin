@@ -114,11 +114,17 @@ const config = require('./../config');
 const express = require('express')
 const axios = require('axios')
 const cors = require('cors');
+const { SummonerStats } = require('../client/src/main/duel/Duel');
 const app = express()
 const port = 4000
 
+const summonerRankURL = "https://na1.api.riotgames.com/lol/league/v4/entries/by-summoner/";
 const summonerURL = "https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/";
 var summoner = "";
+
+function getRanks(dataArray, ) {
+  return;
+}
 
 app.get('/api/summoners', cors(), (request, response) => {
 
@@ -141,32 +147,35 @@ app.get('/api/summoners', cors(), (request, response) => {
   var dataArray = [];
 
   Promise.all([
+    // Get Summoner with summoner name
     axios.get(summonerURL + request.query.summonerName1 + "?api_key=" + config.api_key),
     axios.get(summonerURL + request.query.summonerName2 + "?api_key=" + config.api_key)
-  ]).then((results) => {
-    console.log("Result:", results[0].data, results[1].data);
+  ]).then((summoners) => {
+    console.log("Summoners Result:", summoners[0].data, summoners[1].data);
+
+    Promise.all([
+      // Get Rank data with summoner id
+      axios.get(summonerRankURL + summoners[0].data.id  + "?api_key=" + config.api_key),
+      axios.get(summonerRankURL + summoners[1].data.id  + "?api_key=" + config.api_key)
+    ]).then((ranks) => {
+      console.log("Ranks Result:", ranks[0].data, ranks[1].data);
+
+      const dataObject = []
+      for (let index = 0; index < 2; index++) {
+        dataObject.push({
+          introData: summoners[0].data,
+          rankData: ranks[0].data
+        });
+      }
+      response.json(dataObject);
+    })
     // Return User data as form of an array
-    response.json(results.map(result => {
-      return result.data;
-    }))
+    // response.json(summoners.map(result => {
+    //   return result.data;
+    // }))
   }).catch((error) => {
     response.sendStatus(500);
   })
-
-  // // It works, but is there a better way to do this? - not make it nested?
-  // axios.get(summonerURL + request.query.summonerName1 + "?api_key=" + config.api_key)
-  //   .then((dataPiece1) => {
-  //     dataArray.push(dataPiece1.data);
-  //     axios.get(summonerURL + request.query.summonerName2 + "?api_key=" + config.api_key)
-  //       .then((dataPiece2) => {
-  //         dataArray.push(dataPiece2.data);
-  //         console.log("Array", dataArray);
-  //         response.json(dataArray);
-  //       })
-  //     })
-  //     .catch((error) => {
-  //       response.sendStatus(500);
-  //     })
 
 })
 

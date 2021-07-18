@@ -52,14 +52,14 @@ class Duel extends Component {
           <p>Duel works!</p>
           <div>
             <br/>
-            Summoner1.id: <b>{ this.state.summoner1.id }</b>
+            Summoner1.introData.id: <b>{ this.state.summoner1.introData.id }</b>
             <br/>
-            Summoner2.id: <b>{ this.state.summoner2.id }</b>
+            Summoner2.introData.id: <b>{ this.state.summoner2.introData.id }</b>
           </div>
 
           <p>{ this.state.summoner1.name } vs { this.state.summoner2.name }</p>
-          <p>Lv { this.state.summoner1.summonerLevel}</p>
-          <p>Lv { this.state.summoner2.summonerLevel}</p>
+          <p>Lv { this.state.summoner1.introData.summonerLevel}</p>
+          <p>Lv { this.state.summoner2.introData.summonerLevel}</p>
         </div>
       )
     }
@@ -68,7 +68,7 @@ class Duel extends Component {
 
 // Class for summoner data
 export class SummonerStats {
-  summonerData;
+  introData;
   rankData
 }
 
