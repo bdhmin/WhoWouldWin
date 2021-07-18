@@ -39,7 +39,7 @@ class Duel extends Component {
 
   render() {
     const summonerNames = this.props.match.params.summonerNames.split('summonerNames=')[1].split('&');
-    console.log(summonerNames);
+    console.log('Summoner Names', summonerNames);
 
     // console.log('summoner1:', this.state.summoner1);
     if (this.state.summoner1 === undefined) {
@@ -50,8 +50,16 @@ class Duel extends Component {
       return (
         <div>
           <p>Duel works!</p>
+          <div>
+            <br/>
+            Summoner1.id: <b>{ this.state.summoner1.id }</b>
+            <br/>
+            Summoner2.id: <b>{ this.state.summoner2.id }</b>
+          </div>
+
           <p>{ this.state.summoner1.name } vs { this.state.summoner2.name }</p>
-          <p>Lv { this.state.summoner1.summonerLevel}, Lv { this.state.summoner2.summonerLevel}</p>
+          <p>Lv { this.state.summoner1.summonerLevel}</p>
+          <p>Lv { this.state.summoner2.summonerLevel}</p>
         </div>
       )
     }
@@ -60,8 +68,8 @@ class Duel extends Component {
 
 // Class for summoner data
 export class SummonerStats {
-  summonerName;
-  
+  summonerData;
+  rankData
 }
 
 export default Duel;
