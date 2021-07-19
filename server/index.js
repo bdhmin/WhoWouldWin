@@ -114,7 +114,7 @@ const config = require('./../config');
 const express = require('express')
 const axios = require('axios')
 const cors = require('cors');
-const { SummonerStats } = require('../client/src/main/duel/Duel');
+// const { SummonerStats } = require('../client/src/main/duel/Duel');
 const app = express()
 const port = 4000
 
@@ -163,8 +163,9 @@ app.get('/api/summoners', cors(), (request, response) => {
       const dataObject = []
       for (let index = 0; index < 2; index++) {
         dataObject.push({
-          introData: summoners[0].data,
-          rankData: ranks[0].data
+          introData: summoners[index].data,
+          soloQueueData: ranks[index].data.find(rank => rank.queueType === 'RANKED_SOLO_5x5'),
+          flexQueueData: ranks[index].data.find(rank => rank.queueType === 'RANKED_FLEX_SR')
         });
       }
       response.json(dataObject);

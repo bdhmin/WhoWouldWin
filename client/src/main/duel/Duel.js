@@ -37,6 +37,15 @@ class Duel extends Component {
     console.log("State stuff", this.state.summoner1)
   }
 
+  checkQueuePlayed(queueData) {
+    console.log('queuetest', queueData)
+    if (queueData === 'Unranked') {
+      return <span>{ queueData }</span>
+    } else {
+      return <span>{ queueData.tier }&nbsp;{ queueData.rank }&nbsp;{ Math.trunc((queueData.wins / (queueData.wins + queueData.losses) )*100) }% wr</span>
+    }
+  }
+
   render() {
     const summonerNames = this.props.match.params.summonerNames.split('summonerNames=')[1].split('&');
     console.log('Summoner Names', summonerNames);
@@ -57,9 +66,11 @@ class Duel extends Component {
             Summoner2.introData.id: <b>{ this.state.summoner2.introData.id }</b>
           </div>
 
-          <p>{ this.state.summoner1.name } vs { this.state.summoner2.name }</p>
-          <p>Lv { this.state.summoner1.introData.summonerLevel}</p>
-          <p>Lv { this.state.summoner2.introData.summonerLevel}</p>
+          <p>{ this.state.summoner1.introData.name } vs { this.state.summoner2.introData.name }</p>
+          <p>Lv { this.state.summoner1.introData.summonerLevel} vs Lv { this.state.summoner2.introData.summonerLevel}</p>
+          <p>Solo Queue Rank: { this.checkQueuePlayed(this.state.summoner1.soloQueueData) } vs { this.checkQueuePlayed(this.state.summoner2.soloQueueData) }</p>
+          <p>Flex Queue Rank: { this.checkQueuePlayed(this.state.summoner1.flexQueueData) } vs { this.checkQueuePlayed(this.state.summoner2.flexQueueData) }</p>
+
         </div>
       )
     }
@@ -69,7 +80,8 @@ class Duel extends Component {
 // Class for summoner data
 export class SummonerStats {
   introData;
-  rankData
+  soloQueueData;
+  flexQueueData;
 }
 
 export default Duel;
