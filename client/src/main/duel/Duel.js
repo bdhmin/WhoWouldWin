@@ -42,7 +42,7 @@ class Duel extends Component {
     if (queueData === undefined) {
       return <span>Unranked</span>
     } else {
-      return <span>{ queueData.tier }&nbsp;{ queueData.rank }&nbsp;{ Math.trunc(this.getWinRate(queueData) * 100) }% wr</span>
+      return <span>{ queueData.tier }&nbsp;{ queueData.rank }&nbsp;{ Math.round(this.getWinRate(queueData) * 100) }% wr</span>
     }
   }
 
@@ -79,7 +79,7 @@ class Duel extends Component {
 
   // Returns an array of size 2: 0 index for summoner1 and 1 index for summoner2
   // returnArray[0] + returnArray[1] = 1 = 100%
-  calculateWinners(summoner1, summoner2) {
+  calculateWinnerPercentage(summoner1, summoner2) {
 
     
 
@@ -167,6 +167,26 @@ class Duel extends Component {
     }
   }
 
+  // Return winning summoner
+  getWinnerSummoner(summoner1, summoner2, winnerPercentages) {
+    if (winnerPercentages[0] > winnerPercentages[1]) {
+      return summoner1.introData.name;
+    } else if (winnerPercentages[0] < winnerPercentages[1]) {
+      return summoner2.introData.name;
+    } else {
+      return -1;
+    }
+  }
+
+  // Display winner sentence
+  displayWinnerSentence(winnerResult) {
+    if (winnerResult === -1) {
+      return <span>It's a tie!</span>;
+    } else {
+      return <span><b>{ winnerResult }</b> would win!</span>
+    }
+  }
+
   render() {
     const summonerNames = this.props.match.params.summonerNames.split('summonerNames=')[1].split('&');
     console.log('Summoner Names', summonerNames);
@@ -192,7 +212,8 @@ class Duel extends Component {
           <p>Solo Queue Rank: { this.checkQueuePlayed(this.state.summoner1.soloQueueData) } vs { this.checkQueuePlayed(this.state.summoner2.soloQueueData) }</p>
           <p>Flex Queue Rank: { this.checkQueuePlayed(this.state.summoner1.flexQueueData) } vs { this.checkQueuePlayed(this.state.summoner2.flexQueueData) }</p>
           <p>So...</p>
-          <p>{ this.calculateWinners(this.state.summoner1, this.state.summoner2)[0] } vs { this.calculateWinners(this.state.summoner1, this.state.summoner2)[1] }</p>
+          <p>{ Math.round(this.calculateWinnerPercentage(this.state.summoner1, this.state.summoner2)[0] * 10000) / 100 }% vs { Math.round(this.calculateWinnerPercentage(this.state.summoner1, this.state.summoner2)[1] * 10000) / 100 }%</p>
+          <p>{ this.displayWinnerSentence(this.getWinnerSummoner(this.state.summoner1, this.state.summoner2, this.calculateWinnerPercentage(this.state.summoner1, this.state.summoner2))) }</p>
 
         </div>
       )
