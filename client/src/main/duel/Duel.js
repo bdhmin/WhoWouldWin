@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './duel.css'
 import axios from 'axios';
 
 class Duel extends Component {
@@ -198,7 +199,7 @@ class Duel extends Component {
       )
     } else {
       return (
-        <div>
+        <div className="duel">
           <div>
             <br/>
             {/* Summoner1.introData.id: <b>{ this.state.summoner1.introData.id }</b> */}
