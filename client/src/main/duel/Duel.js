@@ -14,7 +14,7 @@ class Duel extends Component {
     const summoner1 = decodeURIComponent(this.props.match.params.summonerNames.split('summonerNames=')[1].split('&')[0]);
     const summoner2 = decodeURIComponent(this.props.match.params.summonerNames.split('summonerNames=')[1].split('&')[1]);
 
-    console.log("ComponentDidMount:", summoner1, summoner2);
+    // console.log("ComponentDidMount:", summoner1, summoner2);
 
     if (summoner1 !== undefined || summoner2 !== undefined) {
       axios.get('/api/summoners', {
@@ -27,18 +27,18 @@ class Duel extends Component {
         summoner1: response.data[0],
         summoner2: response.data[1],
       }, () => {
-        console.log("After setState:", this.state);
+        // console.log("After setState:", this.state);
       })))
       .catch(function(error) {
         console.log('Can\'t fetch:', error.message);
       })
     }
 
-    console.log("State stuff", this.state.summoner1)
+    // console.log("State stuff", this.state.summoner1)
   }
 
   checkQueuePlayed(queueData) {
-    console.log('queuetest', queueData)
+    // console.log('queuetest', queueData)
     if (queueData === undefined) {
       return <span>Unranked</span>
     } else {
@@ -92,27 +92,27 @@ class Duel extends Component {
     // if 1 higher than 2, lvRatio > 1
     var sum1lv = summoner1.introData.summonerLevel;
     var sum2lv = summoner2.introData.summonerLevel;
-    var lvRatio = sum1lv / sum2lv;
+    // var lvRatio = sum1lv / sum2lv;
     
     // Compare SoloQ Rank with Winrate
-    var soloQueueRankRatio = 0;
+    // var soloQueueRankRatio = 0;
     var soloQueue1RankVal = 0;
     var soloQueue2RankVal = 0;
     if (this.isRanked(summoner1.soloQueueData) && this.isRanked(summoner2.soloQueueData)) {
       soloQueue1RankVal = this.getRankedPoints(summoner1.soloQueueData);
       soloQueue2RankVal = this.getRankedPoints(summoner2.soloQueueData);
-      soloQueueRankRatio = soloQueue1RankVal / soloQueue2RankVal;
+      // soloQueueRankRatio = soloQueue1RankVal / soloQueue2RankVal;
     }
     // console.log('sq rankval:', soloQueue1RankVal, soloQueue2RankVal);
 
     // Compare FlexQ Rank with Winrate (has less prio that SoloQ)
-    var flexQueueRankRatio = 0;
+    // var flexQueueRankRatio = 0;
     var flexQueue1RankVal = 0;
     var flexQueue2RankVal = 0;
     if (this.isRanked(summoner1.flexQueueData) && this.isRanked(summoner2.flexQueueData)) {
       flexQueue1RankVal = this.getRankedPoints(summoner1.flexQueueData);
       flexQueue2RankVal = this.getRankedPoints(summoner2.flexQueueData);
-      flexQueueRankRatio = flexQueue1RankVal / flexQueue2RankVal;
+      // flexQueueRankRatio = flexQueue1RankVal / flexQueue2RankVal;
     }
 
     // Calculating the importance (weight distribution) of each category
@@ -126,7 +126,7 @@ class Duel extends Component {
     flexQueue1RankVal *= 25;
     flexQueue2RankVal *= 25;
 
-    console.log('Ratios calculated:', lvRatio, soloQueueRankRatio, flexQueueRankRatio);
+    // console.log('Ratios calculated:', lvRatio, soloQueueRankRatio, flexQueueRankRatio);
 
     const sum1Calculated = sum1lv + soloQueue1RankVal + flexQueue1RankVal;
     const sum2Calculated = sum2lv + soloQueue2RankVal + flexQueue2RankVal;
@@ -188,8 +188,8 @@ class Duel extends Component {
   }
 
   render() {
-    const summonerNames = this.props.match.params.summonerNames.split('summonerNames=')[1].split('&');
-    console.log('Summoner Names', summonerNames);
+    // const summonerNames = this.props.match.params.summonerNames.split('summonerNames=')[1].split('&');
+    // console.log('Summoner Names', summonerNames);
 
     // console.log('summoner1:', this.state.summoner1);
     if (this.state.summoner1 === undefined) {
@@ -199,12 +199,11 @@ class Duel extends Component {
     } else {
       return (
         <div>
-          <p>Duel works!</p>
           <div>
             <br/>
-            Summoner1.introData.id: <b>{ this.state.summoner1.introData.id }</b>
+            {/* Summoner1.introData.id: <b>{ this.state.summoner1.introData.id }</b> */}
             <br/>
-            Summoner2.introData.id: <b>{ this.state.summoner2.introData.id }</b>
+            {/* Summoner2.introData.id: <b>{ this.state.summoner2.introData.id }</b> */}
           </div>
 
           <p>{ this.state.summoner1.introData.name } vs { this.state.summoner2.introData.name }</p>

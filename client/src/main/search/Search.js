@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import './search.css'
+import Waves from '../../assets/waves-4.svg'
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
@@ -16,19 +18,19 @@ class Search extends Component {
     this.setState({
       summonerSearchName1: event.target.value
     })
-    console.log(this.state.summonerSearchName1);
+    // console.log(this.state.summonerSearchName1);
   }
   
   handleSummonerSearchChange2 = (event) => {
     this.setState({
       summonerSearchName2: event.target.value
     })
-    console.log(this.state.summonerSearchName2);
+    // console.log(this.state.summonerSearchName2);
   }
 
   keyPressSearch = (event) => {
     if (event.keyCode === 13) {
-      console.log("Entered: ", event.target.value);
+      // console.log("Entered: ", event.target.value);
       this.searchSummoners();
     }
   }
@@ -36,7 +38,7 @@ class Search extends Component {
   searchSummoners = () => {
     // Goal: Api call is made, but routes to player 1v1 page with query params
 
-    console.log("Compare Button Pressed. Comparing:", this.state.summonerSearchName1, "vs", this.state.summonerSearchName2);
+    // console.log("Compare Button Pressed. Comparing:", this.state.summonerSearchName1, "vs", this.state.summonerSearchName2);
     this.searchRedirect();
     // useHistory().push('/duel/summonerName=' + this.state.summonerSearchName2 + '&' + this.state.summonerSearchName2);
     // this.componentDidMount(this.state.summonerSearchName1,  this.state.summonerSearchName2)
@@ -74,24 +76,26 @@ class Search extends Component {
 
   render() {
     return (
-      <div>
-        <form>
-          <div>
-            Search for summoners:
-            <input type="text" value={this.state.summonerSearchName1} onChange={this.handleSummonerSearchChange1}></input>
-            <input type="text" value={this.state.summonerSearchName2} onChange={this.handleSummonerSearchChange2}></input>
-            <Link to={'/duel/summonerNames=' + encodeURIComponent(this.state.summonerSearchName1) + '&' + encodeURIComponent(this.state.summonerSearchName2)}>Duel!</Link>
-            {/* <Link to={'/duel/summonerName=${this.state.summonerSearchName1}&${this.state.summonerSearchName2}'}>Duel!</Link> */}
-            {/* <button type="button" onClick={this.searchSummoners} >Compare!</button> */}
+      <div className="search">
+        <img className="waves" src={Waves} alt="Waves" viewBox="0 0 960 540"/>
+        <div className="search-content">
+          <div className="title">
+            Who Would Win?
           </div>
-        </form>
-
-        <h2>Users</h2>
-        <ul>
-        {this.state.users.map(user => 
-          <li key={user.id}>{user.name}, Level {user.summonerLevel}</li>
-        )}
-        </ul>
+          <form className="form">
+            <div>
+              {/* <div className="form-title">
+                Search two summoners!
+              </div> */}
+              <input className="textbox" type="text" value={this.state.summonerSearchName1} onChange={this.handleSummonerSearchChange1}></input>
+              <input className="textbox" type="text" value={this.state.summonerSearchName2} onChange={this.handleSummonerSearchChange2}></input>
+              {/* <Link to={'/duel/summonerName=${this.state.summonerSearchName1}&${this.state.summonerSearchName2}'}>Duel!</Link> */}
+              {/* <button type="button" onClick={this.searchSummoners} >Compare!</button> */}
+              {/* <button type="button" onClick={routeSearch()}>Duel!</button> */}
+              <Link className="duel-button" to={'/duel/summonerNames=' + encodeURIComponent(this.state.summonerSearchName1) + '&' + encodeURIComponent(this.state.summonerSearchName2)}>Duel!</Link>
+            </div>
+          </form>
+        </div>
       </div>
     );
   }

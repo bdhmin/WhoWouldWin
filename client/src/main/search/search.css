@@ -1,0 +1,75 @@
+.search {
+  display: flex;
+  height: 100vh;
+  background-color: #131822;
+  align-items: center;
+  flex-direction: column;
+}
+
+.search-content {
+  z-index: 10;
+}
+
+.title {
+  margin: 200px 0 0 0;
+  font-size: 128px;
+  font-family: 'Unica One';
+  /* color: #1c1557 */
+  color: #96a6d1;
+}
+
+.form {
+  /* border: solid red 1px; */
+  margin: 50px 0 0 0;
+  display: flex;
+  justify-content: center;
+}
+
+.textbox {
+  outline: none !important;
+  padding: 5px 10px;
+  margin-right: 15px;
+  border: none;
+  border-radius: 8px;
+  background-color: #2b3141;
+  font-family: 'Titillium Web', sans-serif;
+  color: #becefc;
+  font-size: 16px;
+  height: 35px;
+  width: 350px;
+}
+
+.duel-button {
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  background-color: #2b3141;
+  color: #2c105c;
+  padding: 11px 24px;
+  border-radius: 9px;
+  transition: 0.3s;
+}
+
+/* visited link */
+.duel-button:visited {
+  color: #becefc;
+}
+
+/* mouse over link */
+.duel-button:hover {
+  background-color: #3c4253;
+  color: #becefc;
+}
+
+/* selected link */
+.duel-button:active {
+  color: #becefc;
+}
+
+.waves {
+  z-index: 1;
+  position: absolute;
+  /* top: 0; */
+  bottom: 0;
+  width: 100vw;
+}

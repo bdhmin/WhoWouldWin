@@ -142,7 +142,7 @@ app.get('/api/summoners', cors(), (request, response) => {
   // response.json([config.hard_coded_summoner]);
   // summoner = request.query.summonerName1;
 
-  console.log("Query Names:", request.query.summonerName1, "and", request.query.summonerName2);
+  // console.log("Query Names:", request.query.summonerName1, "and", request.query.summonerName2);
   
   var dataArray = [];
 
@@ -151,14 +151,14 @@ app.get('/api/summoners', cors(), (request, response) => {
     axios.get(summonerURL + request.query.summonerName1 + "?api_key=" + config.api_key),
     axios.get(summonerURL + request.query.summonerName2 + "?api_key=" + config.api_key)
   ]).then((summoners) => {
-    console.log("Summoners Result:", summoners[0].data, summoners[1].data);
+    // console.log("Summoners Result:", summoners[0].data, summoners[1].data);
 
     Promise.all([
       // Get Rank data with summoner id
       axios.get(summonerRankURL + summoners[0].data.id  + "?api_key=" + config.api_key),
       axios.get(summonerRankURL + summoners[1].data.id  + "?api_key=" + config.api_key)
     ]).then((ranks) => {
-      console.log("Ranks Result:", ranks[0].data, ranks[1].data);
+      // console.log("Ranks Result:", ranks[0].data, ranks[1].data);
 
       const dataObject = []
       for (let index = 0; index < 2; index++) {
@@ -181,6 +181,6 @@ app.get('/api/summoners', cors(), (request, response) => {
 })
 
 app.listen(port, () => {
-  console.log("URL:", summonerURL + summoner + "?api_key=" + config.api_key);
-  console.log(`Example app listening at http://localhost:${port}/api/summoners`)
+  // console.log("URL:", summonerURL + summoner + "?api_key=" + config.api_key);
+  // console.log(`Example app listening at http://localhost:${port}/api/summoners`)
 })
