@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import './duel.css'
 import axios from 'axios';
 
@@ -43,7 +44,7 @@ class Duel extends Component {
     if (queueData === undefined) {
       return <span>Unranked</span>
     } else {
-      return <span>{ queueData.tier }&nbsp;{ queueData.rank }&nbsp;{ Math.round(this.getWinRate(queueData) * 100) }% wr</span>
+      return <span>{ queueData.tier }&nbsp;{ queueData.rank }&nbsp;&nbsp;&nbsp;{ Math.round(this.getWinRate(queueData) * 100) }% wr</span>
     }
   }
 
@@ -85,6 +86,13 @@ class Duel extends Component {
     // usually ~50 more levels is a decent amount better
     // higher the level, the less relevant
     // basically, base comparison starts at lv 30 - can begin ranked
+
+    // Easter egg!!! NewBro64 is always better than you :D
+    if (summoner1.introData.name == "NewBro64") {
+      return [1.01, -0.01];
+    } else if (summoner2.introData.name == "NewBro64") {
+      return [-0.01, 1.01];
+    }
 
     // level1 / level2
     // if 1 higher than 2, lvRatio > 1
@@ -192,19 +200,27 @@ class Duel extends Component {
     if (!resultSummoners) {
       return (
         <div class="summoner-content">
-          No data... Something went wrong!
+          Whoops... Something went wrong!
         </div>
       )
     }
     const winner = resultSummoners[0];
     const loser = resultSummoners[1];
 
-
     if (winner === summoner) {
       return (
         <div className="summoner-content winner">
+
+          {/* 
+            - How to display summoner icon?
+            source: https://www.reddit.com/r/leagueoflegends/comments/ipiesz/riot_api_summoner_icons/
+           */}
+          <div className="summoner-profile">
+            {/* <div className="level">Level {summoner.introData.summonerLevel}</div> */}
+            <div className="summoner">{ winner.introData.name }</div>
+          </div>
           <div className="percentage winner">
-            { Math.round(this.calculateWinnerPercentage(this.state.summoner1, this.state.summoner2)[0] * 10000) / 100 }%
+            { Math.round(this.calculateWinnerPercentage(winner, loser)[0] * 10000) / 100 }%
           </div>
           {/* <div className="winner-declare">Winner</div> */}
             { this.displaySummonerStats(winner) }
@@ -213,8 +229,12 @@ class Duel extends Component {
     } else {
       return (
         <div className="summoner-content loser">
+          <div className="summoner-profile">
+            {/* <div className="level">Level {summoner.introData.summonerLevel}</div> */}
+            <div className="summoner">{ loser.introData.name }</div>
+          </div>
           <div className="percentage loser">
-            { Math.round(this.calculateWinnerPercentage(this.state.summoner1, this.state.summoner2)[1] * 10000) / 100 }%
+            { Math.round(this.calculateWinnerPercentage(winner, loser)[1] * 10000) / 100 }%
           </div>
           { this.displaySummonerStats(loser) }
         </div>
@@ -225,11 +245,7 @@ class Duel extends Component {
   displaySummonerStats(summoner) {
     return (
       <div>
-        <div className="summoner-profile">
-          <div className="summoner">{ summoner.introData.name }</div>
-          {/* <div className="level">Level {summoner.introData.summonerLevel}</div> */}
-        </div>
-        { this.displayDataPoint("Level:", summoner.introData.summonerLevel) }
+        { this.displayDataPoint("Experience:", 'Level ' + summoner.introData.summonerLevel) }
         { this.displayDataPoint("Solo Queue Rank:", this.checkQueuePlayed(summoner.soloQueueData)) }
         { this.displayDataPoint("Flex Queue Rank:", this.checkQueuePlayed(summoner.flexQueueData)) }
       </div>
@@ -250,9 +266,11 @@ class Duel extends Component {
   }
 
   render() {
-    if (this.state.summoner1 === undefined) {
+    if (!this.state.summoner1 || !this.state.summoner2) {
       return (
-        <div>Loading Summoners...</div>
+        <div className="loading">
+          Loading...
+        </div>
       )
     } else {
       return (
@@ -264,11 +282,9 @@ class Duel extends Component {
             {/* Summoner2.introData.id: <b>{ this.state.summoner2.introData.id }</b> */}
           </div>
 
-          <div className="title-mini">
+          <Link to="/" className="title-mini">
             Who Would Win?
-          </div>
-
-
+          </Link>
 
           <div className="duel-content">
             { this.displayWinnerLoserComponent(this.state.summoner1) }
@@ -281,8 +297,8 @@ class Duel extends Component {
           <p>Solo Queue Rank: { this.checkQueuePlayed(this.state.summoner1.soloQueueData) } vs { this.checkQueuePlayed(this.state.summoner2.soloQueueData) }</p>
           <p>Flex Queue Rank: { this.checkQueuePlayed(this.state.summoner1.flexQueueData) } vs { this.checkQueuePlayed(this.state.summoner2.flexQueueData) }</p>
           <p>So...</p>
-          <p>{ Math.round(this.calculateWinnerPercentage(this.state.summoner1, this.state.summoner2)[0] * 10000) / 100 }% vs { Math.round(this.calculateWinnerPercentage(this.state.summoner1, this.state.summoner2)[1] * 10000) / 100 }%</p>
-          <p>{ this.displayWinnerSentence(this.getWinnerSummoner(this.state.summoner1, this.state.summoner2, this.calculateWinnerPercentage(this.state.summoner1, this.state.summoner2))) }</p> */}
+          <p>{ Math.round(this.calculateWinnerPercentage(this.state.summoner1, this.state.summoner2)[0] * 10000) / 100 }% vs { Math.round(this.calculateWinnerPercentage(this.state.summoner1, this.state.summoner2)[1] * 10000) / 100 }%</p> */}
+          {/* <p>{ this.displayWinnerSentence(this.getWinnerSummoner(this.state.summoner1, this.state.summoner2, this.calculateWinnerPercentage(this.state.summoner1, this.state.summoner2))) }</p> */}
 
         </div>
       )
