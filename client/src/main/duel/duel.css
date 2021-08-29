@@ -1,4 +1,93 @@
 .duel {
-  background-color: #131822;
-  min-height: 100vh;
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  flex-direction: column;
+}
+
+.title-mini {
+  margin: 0;
+  font-size: 64px;
+  font-family: 'Unica One';
+  color: #96a6d1;
+}
+
+.duel-content {
+  margin-top: 60px;
+  display: flex;
+  flex-direction: row;
+  width: 70vw;
+}
+
+.summoner-content {
+  /* border: white solid 1px; */
+  color: #96a6d1;
+  border-radius: 10px;
+  width: 100%;
+  padding: 0 0 30px 0;
+}
+.summoner-content.winner {
+  /* color: #35e794; */
+  background-color: #2a3447;
+}
+.summoner-content.loser {
+  border: #2a3447 solid 3px
+  /* background-color: #0c1016; */
+}
+
+.percentage {
+  margin: 30px 0 10px 0;
+  text-align: center;
+  font-size: 72px;
+}
+.percentage.winner {
+  color: #35e794;
+}
+.percentage.loser {
+  color: #992121;
+}
+/* Styling for Data Points */
+.data-point {
+  /* border: springgreen 1px solid; */
+  height: 100px;
+  padding: 20px 0;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+
+}
+.data-title {
+  padding-left: 10%;
+  font-weight: 600;
+  color: #96a6d1;
+}
+.data-value {
+  font-size: 32px;
+  text-align: center;
+  color: #c8d7ff;
+}
+
+.summoner-profile {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  padding: 30px 0;
+  width: 100%;
+
+  /* border-top: #96a6d1 solid 1px; */
+}
+.summoner {
+  font-size: 32px;
+  font-weight: 600;
+  color: #c8d7ff;
+}
+.level {
+  bottom: 0px;
+  padding: 18px 0 5px 15px;
+  color: #96a6d1;
+}
+
+/* Adds a gap in between two summoner rows of data */
+.summoner-content + .summoner-content {
+  margin-left: 30px;
 }

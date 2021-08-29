@@ -81,9 +81,6 @@ class Duel extends Component {
   // Returns an array of size 2: 0 index for summoner1 and 1 index for summoner2
   // returnArray[0] + returnArray[1] = 1 = 100%
   calculateWinnerPercentage(summoner1, summoner2) {
-
-    
-
     // Compare Level (basically, how much experience you have in the game)
     // usually ~50 more levels is a decent amount better
     // higher the level, the less relevant
@@ -168,31 +165,91 @@ class Duel extends Component {
     }
   }
 
-  // Return winning summoner
-  getWinnerSummoner(summoner1, summoner2, winnerPercentages) {
+  // Returns object of winner and loser summoner
+  // Index 0 is winner, index 1 is loser
+  getWinnerLoser(summoner1, summoner2) {
+    const winnerPercentages = this.calculateWinnerPercentage(summoner1, summoner2);
     if (winnerPercentages[0] > winnerPercentages[1]) {
-      return summoner1.introData.name;
+      return [summoner1, summoner2];
     } else if (winnerPercentages[0] < winnerPercentages[1]) {
-      return summoner2.introData.name;
+      return [summoner2, summoner1];
     } else {
-      return -1;
+      return null;
     }
   }
 
   // Display winner sentence
-  displayWinnerSentence(winnerResult) {
-    if (winnerResult === -1) {
-      return <span>It's a tie!</span>;
+  // displayWinnerSentence(result) {
+  //   if (result === -1) {
+  //     return <span>It's a tie!</span>;
+  //   } else {
+  //     return <span><b>{ result }</b> would win!</span>
+  //   }
+  // }
+
+  displayWinnerLoserComponent(summoner) {
+    const resultSummoners = this.getWinnerLoser(this.state.summoner1, this.state.summoner2)
+    if (!resultSummoners) {
+      return (
+        <div class="summoner-content">
+          No data... Something went wrong!
+        </div>
+      )
+    }
+    const winner = resultSummoners[0];
+    const loser = resultSummoners[1];
+
+
+    if (winner === summoner) {
+      return (
+        <div className="summoner-content winner">
+          <div className="percentage winner">
+            { Math.round(this.calculateWinnerPercentage(this.state.summoner1, this.state.summoner2)[0] * 10000) / 100 }%
+          </div>
+          {/* <div className="winner-declare">Winner</div> */}
+            { this.displaySummonerStats(winner) }
+        </div>
+      )
     } else {
-      return <span><b>{ winnerResult }</b> would win!</span>
+      return (
+        <div className="summoner-content loser">
+          <div className="percentage loser">
+            { Math.round(this.calculateWinnerPercentage(this.state.summoner1, this.state.summoner2)[1] * 10000) / 100 }%
+          </div>
+          { this.displaySummonerStats(loser) }
+        </div>
+      )
     }
   }
 
-  render() {
-    // const summonerNames = this.props.match.params.summonerNames.split('summonerNames=')[1].split('&');
-    // console.log('Summoner Names', summonerNames);
+  displaySummonerStats(summoner) {
+    return (
+      <div>
+        <div className="summoner-profile">
+          <div className="summoner">{ summoner.introData.name }</div>
+          {/* <div className="level">Level {summoner.introData.summonerLevel}</div> */}
+        </div>
+        { this.displayDataPoint("Level:", summoner.introData.summonerLevel) }
+        { this.displayDataPoint("Solo Queue Rank:", this.checkQueuePlayed(summoner.soloQueueData)) }
+        { this.displayDataPoint("Flex Queue Rank:", this.checkQueuePlayed(summoner.flexQueueData)) }
+      </div>
+    )
+  }
 
-    // console.log('summoner1:', this.state.summoner1);
+  displayDataPoint(title, data) {
+    return (
+      <div className="data-point">
+        <div className="data-title">
+          {title}
+        </div>
+        <div className="data-value">
+          {data}
+        </div>
+      </div>
+    )
+  }
+
+  render() {
     if (this.state.summoner1 === undefined) {
       return (
         <div>Loading Summoners...</div>
@@ -207,13 +264,25 @@ class Duel extends Component {
             {/* Summoner2.introData.id: <b>{ this.state.summoner2.introData.id }</b> */}
           </div>
 
-          <p>{ this.state.summoner1.introData.name } vs { this.state.summoner2.introData.name }</p>
+          <div className="title-mini">
+            Who Would Win?
+          </div>
+
+
+
+          <div className="duel-content">
+            { this.displayWinnerLoserComponent(this.state.summoner1) }
+            { this.displayWinnerLoserComponent(this.state.summoner2) }
+          </div>
+
+
+          {/* <p>{ this.state.summoner1.introData.name } vs { this.state.summoner2.introData.name }</p>
           <p>Lv { this.state.summoner1.introData.summonerLevel} vs Lv { this.state.summoner2.introData.summonerLevel}</p>
           <p>Solo Queue Rank: { this.checkQueuePlayed(this.state.summoner1.soloQueueData) } vs { this.checkQueuePlayed(this.state.summoner2.soloQueueData) }</p>
           <p>Flex Queue Rank: { this.checkQueuePlayed(this.state.summoner1.flexQueueData) } vs { this.checkQueuePlayed(this.state.summoner2.flexQueueData) }</p>
           <p>So...</p>
           <p>{ Math.round(this.calculateWinnerPercentage(this.state.summoner1, this.state.summoner2)[0] * 10000) / 100 }% vs { Math.round(this.calculateWinnerPercentage(this.state.summoner1, this.state.summoner2)[1] * 10000) / 100 }%</p>
-          <p>{ this.displayWinnerSentence(this.getWinnerSummoner(this.state.summoner1, this.state.summoner2, this.calculateWinnerPercentage(this.state.summoner1, this.state.summoner2))) }</p>
+          <p>{ this.displayWinnerSentence(this.getWinnerSummoner(this.state.summoner1, this.state.summoner2, this.calculateWinnerPercentage(this.state.summoner1, this.state.summoner2))) }</p> */}
 
         </div>
       )

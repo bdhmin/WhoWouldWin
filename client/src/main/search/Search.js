@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './search.css'
 import Waves from '../../assets/waves-4.svg'
+import LowPoly from '../../assets/low-poly-1.svg'
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
@@ -77,23 +78,26 @@ class Search extends Component {
   render() {
     return (
       <div className="search">
-        <img className="waves" src={Waves} alt="Waves" viewBox="0 0 960 540"/>
+        {/* <img className="waves" src={Waves} alt="Waves" viewBox="0 0 960 540"/> */}
+        {/* <img className="lowpoly" src={LowPoly} alt="Waves" viewBox="0 0 900 900"/> */}
         <div className="search-content">
           <div className="title">
             Who Would Win?
           </div>
+          <div className="subtitle">
+            {/* Search two summoners to see who's better! */}
+            A League of Legends player statistics comparison web app!
+          </div>
           <form className="form">
-            <div>
-              {/* <div className="form-title">
-                Search two summoners!
-              </div> */}
-              <input className="textbox" type="text" value={this.state.summonerSearchName1} onChange={this.handleSummonerSearchChange1}></input>
-              <input className="textbox" type="text" value={this.state.summonerSearchName2} onChange={this.handleSummonerSearchChange2}></input>
+            <div className="inputs">
+              <input className="textbox" type="text" placeholder="Summoner 1" value={this.state.summonerSearchName1} onChange={this.handleSummonerSearchChange1}></input>
+              <input className="textbox" type="text" placeholder="Summoner 2" value={this.state.summonerSearchName2} onChange={this.handleSummonerSearchChange2}></input>
               {/* <Link to={'/duel/summonerName=${this.state.summonerSearchName1}&${this.state.summonerSearchName2}'}>Duel!</Link> */}
               {/* <button type="button" onClick={this.searchSummoners} >Compare!</button> */}
               {/* <button type="button" onClick={routeSearch()}>Duel!</button> */}
               <Link className="duel-button" to={'/duel/summonerNames=' + encodeURIComponent(this.state.summonerSearchName1) + '&' + encodeURIComponent(this.state.summonerSearchName2)}>Duel!</Link>
             </div>
+            <div className="note">*NA summoners only</div>
           </form>
         </div>
       </div>
