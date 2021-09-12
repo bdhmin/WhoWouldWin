@@ -88,11 +88,11 @@ class Duel extends Component {
     // basically, base comparison starts at lv 30 - can begin ranked
 
     // Easter egg!!! NewBro64 is always better than you :D
-    if (summoner1.introData.name == "NewBro64") {
-      return [1.01, -0.01];
-    } else if (summoner2.introData.name == "NewBro64") {
-      return [-0.01, 1.01];
-    }
+    // if (summoner1.introData.name === "NewBro64") {
+    //   return [1.01, -0.01];
+    // } else if (summoner2.introData.name === "NewBro64") {
+    //   return [-0.01, 1.01];
+    // }
 
     // level1 / level2
     // if 1 higher than 2, lvRatio > 1
@@ -265,22 +265,39 @@ class Duel extends Component {
     )
   }
 
+  // Creates HTML elements of summoner skeleton components while loading data
+  doubleSkeleton() {
+    var skeletons = [];
+    for (var i = 0; i < 2; i++) {
+      skeletons.push((
+        <div key={i} className="summoner-content skeleton">
+          <div className="summoner-profile">
+            <div className="summoner-skeleton"></div>
+          </div>
+        </div>
+      ))
+    }
+    return skeletons;
+  }
+
   render() {
     if (!this.state.summoner1 || !this.state.summoner2) {
+    // if (true) {
       return (
-        <div className="loading">
-          Loading...
+        <div className="duel">
+          <Link to="/" className="title-mini">
+            Who Would Win?
+          </Link>
+
+          <div className="duel-content">
+            { this.doubleSkeleton() }
+          </div>
+
         </div>
       )
     } else {
       return (
         <div className="duel">
-          <div>
-            <br/>
-            {/* Summoner1.introData.id: <b>{ this.state.summoner1.introData.id }</b> */}
-            <br/>
-            {/* Summoner2.introData.id: <b>{ this.state.summoner2.introData.id }</b> */}
-          </div>
 
           <Link to="/" className="title-mini">
             Who Would Win?

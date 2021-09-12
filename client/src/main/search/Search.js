@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './search.css'
-import Waves from '../../assets/waves-4.svg'
-import LowPoly from '../../assets/low-poly-1.svg'
+// import Waves from '../../assets/waves-4.svg'
+// import LowPoly from '../../assets/low-poly-1.svg'
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 

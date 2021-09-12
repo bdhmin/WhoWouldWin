@@ -6,7 +6,7 @@
 }
 
 .title-mini {
-  margin: 0;
+  margin: 65px 0 0 0;
   font-size: 64px;
   font-family: 'Unica One';
   color: #96a6d1;
@@ -34,9 +34,16 @@
 .summoner-content.winner {
   /* color: #35e794; */
   background-color: #2a3447;
+  border: #2a3447 solid 3px
 }
 .summoner-content.loser {
   border: #2a3447 solid 3px
+  /* background-color: #0c1016; */
+}
+.summoner-content.skeleton {
+  height: 678px;
+  border: #1d2431 solid 3px;
+  background-color: #1d2431;
   /* background-color: #0c1016; */
 }
 
@@ -86,6 +93,12 @@
   font-weight: 600;
   color: #c8d7ff;
 }
+.summoner-skeleton {
+  width: 200px;
+  height: 48px;
+  border-radius: 10px;
+  background-color: #242c3f;
+}
 .level {
   bottom: 0px;
   padding: 18px 0 5px 15px;
@@ -95,13 +108,4 @@
 /* Adds a gap in between two summoner rows of data */
 .summoner-content + .summoner-content {
   margin-left: 30px;
-}
-
-.loading {
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 36px;
 }
