@@ -6,7 +6,15 @@ This project aims to settle the heated debates between two players who think the
 
 ### Generate Riot API to Run Remotely
 1. You must generate a temporary 24 hour Riot API. You can generate yours [here](https://developer.riotgames.com).
-2. Navigate to `WhoWouldWin/config.js` and paste your Riot API to the variable `api_key`.
+2. In `/WhoWouldWin`, create a `config.js` file and paste below code in:
+
+```
+// Riot API Key
+const api_key = "<paste-your-Riot-API-here>";
+
+module.exports = { api_key };
+```
+4. Navigate to `WhoWouldWin/config.js` and paste your Riot API to the variable where requested.
 
 ### Command Line
 1. `npm run server` to run the backend server
